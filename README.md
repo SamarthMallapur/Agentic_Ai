@@ -8,7 +8,7 @@
 ---
 
 ## Architecture
-- **Frontend:** React + Vite (Modern SPA with Tailwind/custom responsive styling and routing)
+- **Frontend:** React + Vite (Modern SPA with responsive dashboard, analytics, and interview coaching UI)
 - **Backend API:** FastAPI (Async Python REST API)
 - **Orchestration:** Google ADK Agents
 - **Models:** Gemini 3.1 Flash Lite via `google-genai`
@@ -17,64 +17,65 @@
 
 ---
 
-## Getting Started
+## Quick Start (Single Command)
 
 ### 1. Prerequisites
 - **Python 3.8+**
 - **Node.js** (v18+) and **npm**
 
-### 2. Backend Setup
-1. **Navigate to the project root**:
-   ```bash
-   cd placement-readiness-companion
-   ```
-2. **Create and activate a virtual environment**:
-   ```bash
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
-3. **Install Python dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Configure Environment Variables**:
-   Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-   Add your Gemini API Key in `.env`:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-5. **Initialize Database & Ingest Seed Data**:
-   ```bash
-   python database/models.py
-   python data/seed_data/seed.py
-   python scripts/ingest_jobs.py
-   ```
-6. **Start the FastAPI Backend Server**:
-   ```bash
-   python api.py
-   ```
-   *The backend will run on `http://localhost:8000` (API docs at `http://localhost:8000/docs`).*
+### 2. Configure Environment
+Copy `.env.example` to `.env` and set your Gemini API Key:
+```bash
+cp .env.example .env
+```
+*(Add your Gemini API key inside `.env`: `GEMINI_API_KEY=your_gemini_api_key_here`)*
 
-### 3. Frontend Setup (React)
-1. In a new terminal, navigate to the `frontend` folder:
-   ```bash
-   cd frontend
-   ```
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-3. **Start the Vite development server**:
-   ```bash
-   npm run dev
-   ```
-   *The React web app will run locally (typically at `http://localhost:5173`).*
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run Everything
+Execute the all-in-one startup script:
+```bash
+python start.py
+```
+*(or `python run.py`)*
+
+This script automatically:
+- Checks and initializes the database and seed data if missing (`database/models.py`, `data/seed_data/seed.py`, `scripts/ingest_jobs.py`).
+- Installs frontend packages (`npm install`) if `node_modules` is not yet installed.
+- Starts the **FastAPI Backend** on `http://localhost:8000`.
+- Starts the **React Frontend** on `http://localhost:5173`.
+- Automatically opens `http://localhost:5173` in your default browser.
+- Cleans up both background processes when you press `Ctrl+C`.
+
+---
+
+## Manual Setup (Step-by-Step)
+
+If you prefer running backend and frontend in separate terminals:
+
+### Terminal 1: Backend
+```bash
+# 1. Initialize Database & Ingest Seed Data (first time only)
+python database/models.py
+python data/seed_data/seed.py
+python scripts/ingest_jobs.py
+
+# 2. Start FastAPI Server
+python api.py
+```
+- API is live on: `http://localhost:8000`
+- Interactive Swagger Docs: `http://localhost:8000/docs`
+
+### Terminal 2: Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+- Web Application is live on: `http://localhost:5173`
 
 ---
 
