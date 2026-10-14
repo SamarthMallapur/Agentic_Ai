@@ -1,48 +1,93 @@
 # Placement Readiness Companion
 
-"One AI companion that stays with a student throughout the entire placement season."
+> "One AI companion that stays with a student throughout the entire placement season."
 
 ## Project Overview
-This is a persistent, multi-agent AI companion designed to help students prepare for their placement season. It tracks long-term career profiles, analyzes resumes, manages applications, conducts mock interviews, and researches the job market.
+**Placement Readiness Companion** is a persistent, multi-agent AI application designed to guide and empower students through their placement season. It tracks long-term career profiles, analyzes resumes against job descriptions, manages applications, conducts targeted mock interviews, and surfaces market trends.
+
+---
 
 ## Architecture
-- **UI:** Streamlit
-- **Orchestrator:** Google ADK Agents
+- **Frontend:** React + Vite (Modern SPA with Tailwind/custom responsive styling and routing)
+- **Backend API:** FastAPI (Async Python REST API)
+- **Orchestration:** Google ADK Agents
 - **Models:** Gemini 3.1 Flash Lite via `google-genai`
-- **Memory/DB:** SQLite
-- **MCP Server:** Exposes memory and market data to agents cleanly.
+- **Memory & Storage:** SQLite (`database/models.py`)
+- **MCP Server:** Exposes persistent memory and job market data to agents cleanly
 
-## Setup Instructions
+---
 
-1. **Clone the repo** and navigate to the directory.
-2. **Install dependencies**:
+## Getting Started
+
+### 1. Prerequisites
+- **Python 3.8+**
+- **Node.js** (v18+) and **npm**
+
+### 2. Backend Setup
+1. **Navigate to the project root**:
+   ```bash
+   cd placement-readiness-companion
+   ```
+2. **Create and activate a virtual environment**:
+   ```bash
+   python -m venv venv
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+3. **Install Python dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Set Environment Variables**:
+4. **Configure Environment Variables**:
+   Copy `.env.example` to `.env`:
    ```bash
-   # .env
-   GEMINI_API_KEY=your_api_key
+   cp .env.example .env
    ```
-4. **Initialize the Database & Seed Data**:
+   Add your Gemini API Key in `.env`:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+5. **Initialize Database & Ingest Seed Data**:
    ```bash
    python database/models.py
    python data/seed_data/seed.py
    python scripts/ingest_jobs.py
    ```
-5. **Run the Dashboard**:
+6. **Start the FastAPI Backend Server**:
    ```bash
-   streamlit run app.py
+   python api.py
    ```
+   *The backend will run on `http://localhost:8000` (API docs at `http://localhost:8000/docs`).*
 
-## Workflow
-- **Dashboard**: View overall readiness score.
-- **My Profile**: View and edit your long-term preferences and skills.
-- **Resume Analyzer**: Paste a JD and get a 100-point rubric score and actionable gaps.
-- **Applications Tracker**: Add and manage job applications.
-- **Interview Coach**: Select an application and get 5 tailored mock questions based on your resume and identified weak spots.
-- **Market Trends**: See aggregated statistics on local job data.
-- **Weekly Report**: Generate a full readiness report with Evidence Tables and Recommended Actions.
+### 3. Frontend Setup (React)
+1. In a new terminal, navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Start the Vite development server**:
+   ```bash
+   npm run dev
+   ```
+   *The React web app will run locally (typically at `http://localhost:5173`).*
+
+---
+
+## Features & Workflow
+- **Dashboard**: High-level overview of readiness score, active applications, interviews, and offers.
+- **My Profile**: View and edit long-term career preferences, technical skills, and target roles.
+- **Resume Analyzer**: Upload a PDF or paste resume text against a Job Description to get a 100-point rubric breakdown and actionable skill gaps.
+- **Applications Tracker**: Add, track, and update status on ongoing applications.
+- **Interview Coach**: Tailored mock interview questions generated based on student profile and identified weak spots.
+- **Market Trends**: Aggregated statistics and trending skills from local job market data.
+- **Weekly Report**: Full multi-agent readiness report with Evidence Tables and recommended next steps.
+
+---
 
 ## Known Limitations
-Please see `docs/limitations.md`.
+Please refer to [docs/limitations.md](docs/limitations.md).

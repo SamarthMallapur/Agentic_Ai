@@ -1,6 +1,6 @@
 # How to Start and Run the Program
 
-The Placement Readiness Companion consists of a backend (with both Streamlit and FastAPI options) and a Vite/React frontend.
+The Placement Readiness Companion consists of a FastAPI backend and a Vite/React frontend.
 
 Follow the steps below to set up and run the entire application.
 
@@ -42,26 +42,16 @@ Ensure you have the following installed:
 
 ## 4. Running the Application
 
-You can interact with the companion through either the **Streamlit Dashboard** or the **React Web App**.
+To run the application, start both the FastAPI backend server and the Vite dev server concurrently.
 
-### Option A: Run the Streamlit Dashboard
-The Streamlit app is a standalone dashboard that provides a full interface without needing the React frontend.
-```bash
-streamlit run app.py
-```
-This will automatically open the Streamlit dashboard in your browser (usually at `http://localhost:8501`).
-
-### Option B: Run the FastAPI Backend and React Frontend
-If you prefer to use the React-based frontend, you will need to run the FastAPI server and the Vite dev server concurrently.
-
-**Terminal 1 (Backend - FastAPI):**
+### Terminal 1: Backend (FastAPI)
 Start the FastAPI server from the project root:
 ```bash
 python api.py
 ```
-*(The backend will run on `http://localhost:8000`)*
+*(The backend will run on `http://localhost:8000`, with interactive docs at `http://localhost:8000/docs`)*
 
-**Terminal 2 (Frontend - React):**
+### Terminal 2: Frontend (React)
 Navigate to the `frontend` directory, install dependencies, and start the development server:
 ```bash
 cd frontend
@@ -73,6 +63,6 @@ npm run dev
 ---
 
 ## Troubleshooting
-- **Port Conflicts**: If port `8000`, `8501`, or `5173` are in use, make sure to kill any existing processes using those ports.
+- **Port Conflicts**: If port `8000` or `5173` is in use, make sure to terminate any existing processes using those ports.
 - **Database Errors**: If you encounter SQLite errors, ensure that you ran the initialization scripts in the exact order listed in Step 3.
 - **API Key Errors**: Ensure your `.env` file is named exactly `.env` (not `.env.txt`) and placed in the project root.
