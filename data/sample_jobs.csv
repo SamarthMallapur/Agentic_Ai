@@ -1,0 +1,7 @@
+title,company,location,description,skills,source
+Software Engineer,TechCorp,Bangalore,"We are looking for a Software Engineer to develop backend systems. Requirements: Python, SQL, REST APIs.",Python|SQL|REST,dummy_dataset
+Backend Developer,Innovate Inc,Hyderabad,"Join our team as a Backend Developer. You will use C++ and Docker to build fast services.",C++|Docker,dummy_dataset
+Full Stack Engineer,Webify,Bangalore,"Looking for a dev with React and Python skills. AWS experience is a plus.","React|Python|AWS",dummy_dataset
+Data Engineer,DataWorks,Hyderabad,"Required skills: Python, SQL, Pandas, ETL pipelines.","Python|SQL|Pandas",dummy_dataset
+Frontend Developer,UI UX Co,Bangalore,"Strong React and Javascript skills needed.","React|Javascript|CSS",dummy_dataset
+Software Development Engineer 1,Amazon,Bangalore,"SDE1 position. Requires strong DSA, Java or C++, and problem solving skills.","DSA|Java|C++",dummy_dataset
