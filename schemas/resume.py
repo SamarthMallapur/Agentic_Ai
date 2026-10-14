@@ -1,11 +1,15 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict
+from typing import List
+
+class KeywordCount(BaseModel):
+    keyword: str
+    count: int
 
 class KeywordGap(BaseModel):
     matched_keywords: List[str]
     missing_keywords: List[str]
     partially_matched_keywords: List[str]
-    keyword_frequency: Dict[str, int]
+    keyword_frequency: List[KeywordCount] = []
     priority: List[str]
 
 class ResumeScore(BaseModel):

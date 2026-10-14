@@ -3,6 +3,9 @@ from google import genai
 from pydantic import BaseModel
 import sys
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Add parent dir to path to import schemas
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from schemas.resume import ResumeScore
