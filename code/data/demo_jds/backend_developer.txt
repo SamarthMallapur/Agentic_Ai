@@ -1,0 +1,16 @@
+SYNTHETIC DEMO JOB DESCRIPTION
+Backend Developer
+
+You will design and build reliable backend services for our product team.
+
+Requirements:
+Strong Python and SQL.
+Experience building REST APIs with FastAPI or Django.
+Working knowledge of PostgreSQL and Git.
+Must have Docker experience.
+Understanding of data structures and algorithms.
+
+Familiarity with AWS.
+Exposure to system design.
+Redis is a plus.
+Kubernetes is nice to have.

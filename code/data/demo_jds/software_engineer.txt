@@ -1,0 +1,15 @@
+SYNTHETIC DEMO JOB DESCRIPTION
+Software Engineer
+
+You will write, test and maintain software with a small engineering team.
+
+Requirements:
+Strong data structures and algorithms.
+Object-oriented programming in Java or Python.
+Good SQL and DBMS fundamentals.
+Use Git and write unit tests.
+Clear communication skills.
+
+Familiarity with Linux.
+Exposure to cloud platforms such as AWS.
+Docker is a plus.

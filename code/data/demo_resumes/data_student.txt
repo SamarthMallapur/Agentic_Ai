@@ -1,0 +1,26 @@
+Demo Analyst
+demo.analyst@example.com | +91 90000 00001 | Pune
+
+SUMMARY
+Statistics student who turns business data into clear dashboards and decisions.
+
+EDUCATION
+B.Sc. Statistics, Demo College of Science, 2023 - 2026, CGPA 8.8
+
+SKILLS
+SQL, Excel, Python, Pandas, Power BI, Statistics, Data Visualization, A/B Testing
+
+EXPERIENCE
+Data Analyst Intern, Demo Retail Group, January 2026 - April 2026
+- Built 4 Power BI dashboards that tracked weekly sales across 25 stores.
+- Analyzed customer data with SQL and Excel and found a 12 percent drop in repeat orders.
+- Automated a weekly report in Python and Pandas, saving 5 hours each week.
+
+PROJECTS
+Campaign Analysis, 2025
+- Designed an A/B testing analysis in Python for 8000 email users.
+- Applied statistics to compare groups and presented the result with data visualization.
+
+Hospital Wait Time Dashboard, 2025
+- Created a Power BI dashboard from 30000 records using SQL queries.
+- Delivered recommendations that reduced manual reporting by 3 hours each week.

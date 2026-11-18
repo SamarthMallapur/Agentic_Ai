@@ -1,0 +1,13 @@
+SYNTHETIC DEMO JOB DESCRIPTION
+Frontend Developer
+
+You will build accessible and responsive interfaces for our customers.
+
+Requirements:
+Strong JavaScript and TypeScript.
+Experience with React.
+Solid HTML and CSS.
+Use Git in a team.
+
+Familiarity with Figma.
+Next.js is a plus.

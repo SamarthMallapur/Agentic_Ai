@@ -1,94 +1,67 @@
 # Placement Readiness Companion
 
-> "One AI companion that stays with a student throughout the entire placement season."
+An agentic assistant that stays with one student through a placement season. It reviews resumes, tracks applications, coaches for interviews and produces a cited weekly report.
 
-## Project Overview
-**Placement Readiness Companion** is a persistent, multi-agent AI application designed to guide and empower students through their placement season. It tracks long-term career profiles, analyzes resumes against job descriptions, manages applications, conducts targeted mock interviews, and surfaces market trends.
+**GitHub repository:** https://github.com/SamarthMallapur/Agentic_Ai
 
----
+## Run it
 
-## Architecture
-- **Frontend:** React + Vite (Modern SPA with responsive dashboard, analytics, and interview coaching UI)
-- **Backend API:** FastAPI (Async Python REST API)
-- **Orchestration:** Google ADK Agents
-- **Models:** Gemini 3.1 Flash Lite via `google-genai`
-- **Memory & Storage:** SQLite (`database/models.py`)
-- **MCP Server:** Exposes persistent memory and job market data to agents cleanly
+Python 3.10 or newer is the only requirement.
 
----
-
-## Quick Start (Single Command)
-
-### 1. Prerequisites
-- **Python 3.8+**
-- **Node.js** (v18+) and **npm**
-
-### 2. Configure Environment
-Copy `.env.example` to `.env` and set your Gemini API Key:
 ```bash
-cp .env.example .env
-```
-*(Add your Gemini API key inside `.env`: `GEMINI_API_KEY=your_gemini_api_key_here`)*
-
-### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
+cd code
+python -m pip install -r requirements.txt
+python run.py
 ```
 
-### 4. Run Everything
-Execute the all-in-one startup script:
-```bash
-python start.py
+The app opens at http://127.0.0.1:8000 with a sample student. Full instructions are in [code/README.md](code/README.md).
+
+## Submission contents
+
+| Requirement | Location |
+|---|---|
+| Detailed Project Report | [report/Detailed_Project_Report.docx](report/Detailed_Project_Report.docx) |
+| Executable code, dependencies and run instructions | [code/](code/) |
+| GitHub repository link | Top of this file and in the report |
+| Working demo | [deliverables/demo_walkthrough.md](deliverables/demo_walkthrough.md), [deliverables/screenshots/](deliverables/screenshots/) |
+| AI agents used, and how | [deliverables/agents.md](deliverables/agents.md) |
+| Evidence table | [deliverables/evidence_table.md](deliverables/evidence_table.md) |
+| Node graph | [deliverables/node_graph.png](deliverables/node_graph.png), [Mermaid source](deliverables/node_graph.mmd) |
+| Skill file | [deliverables/skill_file_resume_jd_review.md](deliverables/skill_file_resume_jd_review.md) |
+| Memory schema | [deliverables/memory_schema.md](deliverables/memory_schema.md) |
+| Prompt log | [deliverables/prompt_log.md](deliverables/prompt_log.md) |
+| Weekly report sample | [deliverables/weekly_report_sample.md](deliverables/weekly_report_sample.md) |
+| Limitations note | [deliverables/limitations.md](deliverables/limitations.md) |
+
+## Folder structure
+
+```text
+placement-readiness-companion/
+├── README.md                     Start here
+├── report/
+│   └── Detailed_Project_Report.docx
+├── code/                         Everything needed to run the project
+│   ├── README.md                 Run instructions
+│   ├── requirements.txt
+│   ├── .env.example
+│   ├── run.py                    One-command start
+│   ├── app/                      Agents, tools, memory, research, QA, API
+│   ├── connector/                MCP server
+│   ├── skills/                   Resume-vs-JD skill
+│   ├── data/                     Demo data, and a folder for Kaggle CSV files
+│   ├── frontend/                 React source
+│   ├── web/                      Built web app
+│   ├── scripts/                  Demo data and deliverable builders
+│   └── tests/
+└── deliverables/                 Evidence, graph, schema, logs and samples
 ```
-*(or `python run.py`)*
 
-This script automatically:
-- Checks and initializes the database and seed data if missing (`database/models.py`, `data/seed_data/seed.py`, `scripts/ingest_jobs.py`).
-- Installs frontend packages (`npm install`) if `node_modules` is not yet installed.
-- Starts the **FastAPI Backend** on `http://localhost:8000`.
-- Starts the **React Frontend** on `http://localhost:5173`.
-- Automatically opens `http://localhost:5173` in your default browser.
-- Cleans up both background processes when you press `Ctrl+C`.
+## Before submitting
 
----
+1. Fill in your name, ID and guide on the first page of the report.
+2. Push the final code to GitHub, then open the repository link in a private browser window to confirm it shows this folder structure.
+3. Never submit `code/.env`, because it contains your API key. It is excluded from Git.
 
-## Manual Setup (Step-by-Step)
+## Important data note
 
-If you prefer running backend and frontend in separate terminals:
-
-### Terminal 1: Backend
-```bash
-# 1. Initialize Database & Ingest Seed Data (first time only)
-python database/models.py
-python data/seed_data/seed.py
-python scripts/ingest_jobs.py
-
-# 2. Start FastAPI Server
-python api.py
-```
-- API is live on: `http://localhost:8000`
-- Interactive Swagger Docs: `http://localhost:8000/docs`
-
-### Terminal 2: Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-- Web Application is live on: `http://localhost:5173`
-
----
-
-## Features & Workflow
-- **Dashboard**: High-level overview of readiness score, active applications, interviews, and offers.
-- **My Profile**: View and edit long-term career preferences, technical skills, and target roles.
-- **Resume Analyzer**: Upload a PDF or paste resume text against a Job Description to get a 100-point rubric breakdown and actionable skill gaps.
-- **Applications Tracker**: Add, track, and update status on ongoing applications.
-- **Interview Coach**: Tailored mock interview questions generated based on student profile and identified weak spots.
-- **Market Trends**: Aggregated statistics and trending skills from local job market data.
-- **Weekly Report**: Full multi-agent readiness report with Evidence Tables and recommended next steps.
-
----
-
-## Known Limitations
-Please refer to [docs/limitations.md](docs/limitations.md).
+The included job postings are synthetic demo data, and the app labels them so. To use real data, follow [code/data/raw/README.md](code/data/raw/README.md).

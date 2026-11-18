@@ -1,0 +1,26 @@
+flowchart TD
+    S([Student]) --> I[Intake agent: clarify missing context]
+    I -->|details missing| S
+    I -->|ready| R[Resume-Reviewer]
+    M[(Memory: profile, session, feedback)] --> R
+    R --> T1[[resume_score]]
+    R --> T2[[keyword_gap]]
+    R --> Q1{QA: honesty note, no added facts}
+    Q1 --> S
+    S -->|accept or reject| M
+    S --> W[Weekly report trigger]
+    W --> A[Resume-Reviewer worker]
+    W --> B[Interview-Coach worker]
+    W --> C[Market-Analyst worker]
+    M --> A
+    M --> B
+    C --> D1[Search] --> D2[Extract] --> D3[Compare] --> D4[Synthesize]
+    D1 -->|too few postings: widen| D1
+    D1 <--> X[MCP connector]
+    X <--> P[(Job postings)]
+    X <--> K[(Application tracker)]
+    A --> G[Merge]
+    B --> G
+    D4 --> G
+    G --> Q2{QA gate: citations, labels, facts}
+    Q2 --> F([Weekly report and evidence table])

@@ -1,0 +1,14 @@
+SYNTHETIC DEMO JOB DESCRIPTION
+Data Analyst
+
+You will analyze business data and present findings to managers.
+
+Requirements:
+Strong SQL and Excel.
+Build dashboards in Power BI.
+Good knowledge of statistics.
+Python with Pandas for analysis.
+Clear communication skills.
+
+Familiarity with A/B testing.
+Tableau is a plus.

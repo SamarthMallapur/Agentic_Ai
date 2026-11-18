@@ -1,61 +1,30 @@
+# Secrets
+.env
+!.env.example
+
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
+.pytest_cache/
 .venv/
-env/
-ENV/
-env.bak/
-venv.bak/
+venv/
 
-# Environment Variables & Secrets
-.env
-*.env
-!.env.example
-
-# SQLite Database
+# Local data created when the app runs
 *.db
-*.sqlite
-*.sqlite3
+*.db-journal
+code/logs/*
+!code/logs/.gitkeep
+code/data/raw/*
+!code/data/raw/README.md
 
-# Logs
-logs/*.log
-*.log
-
-# Frontend & Node
+# Frontend
 node_modules/
-dist/
-dist-ssr/
 *.local
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-# IDE & OS
+# Tools and OS
+.claude/
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+~$*

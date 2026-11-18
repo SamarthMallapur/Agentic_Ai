@@ -1,0 +1,25 @@
+Demo Designer
+demo.frontend@example.com | +91 90000 00002 | Chennai
+
+SUMMARY
+Frontend developer who builds accessible and responsive web interfaces.
+
+EDUCATION
+B.Tech Information Technology, Demo University, 2022 - 2026, CGPA 8.1
+
+SKILLS
+JavaScript, TypeScript, React, HTML, CSS, Git, Figma
+
+EXPERIENCE
+Frontend Intern, Demo Web Studio, June 2025 - August 2025
+- Developed 12 React components with TypeScript for a customer dashboard.
+- Improved page load time by 30 percent by splitting bundles.
+- Implemented responsive HTML and CSS layouts from Figma designs.
+
+PROJECTS
+Recipe Finder, 2025
+- Built a React and JavaScript application with search and saved favourites.
+- Managed the code with Git and reviewed changes with 3 teammates.
+
+Portfolio Generator, 2024
+- Created a TypeScript tool that produced static HTML pages for 50 users.
