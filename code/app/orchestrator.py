@@ -148,15 +148,20 @@ def to_markdown(r: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def weekly_report() -> dict:
+def weekly_report(on_event=None) -> dict:
+    """Run the swarm. on_event receives live progress for the mission-control view."""
     trace, started = [], time.perf_counter()
+    emit = on_event or (lambda event: None)
 
     def run_node(name, fn):
         begin = time.perf_counter()
+        emit({"type": "node", "node": name, "state": "running"})
         try:
             return fn()
         finally:
-            trace.append({"node": name, "ms": round(1000 * (time.perf_counter() - begin))})
+            ms = round(1000 * (time.perf_counter() - begin))
+            trace.append({"node": name, "ms": ms})
+            emit({"type": "node", "node": name, "state": "done", "ms": ms})
 
     profile = run_node("Load memory", memory.get_profile)
     connector = MCPConnector()
@@ -164,7 +169,8 @@ def weekly_report() -> dict:
         review_job = pool.submit(run_node, "Resume-Reviewer", agents.reviewer_worker)
         coach_job = pool.submit(run_node, "Interview-Coach", agents.coach_worker)
         market_job = pool.submit(run_node, "Market-Analyst (research loop)",
-                                 lambda: research.run(profile["target_roles"], profile["skills"], connector))
+                                 lambda: research.run(profile["target_roles"], profile["skills"], connector,
+                                                      lambda step: emit({"type": "research", **step})))
         review, coach, market = review_job.result(), coach_job.result(), market_job.result()
 
     def merge():

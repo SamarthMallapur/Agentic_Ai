@@ -90,9 +90,22 @@ def synthesize(rows, rising, sample: int, scope: str) -> list[dict]:
     return claims
 
 
-def run(roles: list[str], student_skills: list[str], connector=None) -> dict:
+class _Trace(list):
+    """A trace list that can report each step as it happens."""
+
+    def __init__(self, on_step=None):
+        super().__init__()
+        self.on_step = on_step
+
+    def append(self, step):
+        super().append(step)
+        if self.on_step:
+            self.on_step(step)
+
+
+def run(roles: list[str], student_skills: list[str], connector=None, on_step=None) -> dict:
     connector = connector or DirectConnector()
-    trace: list[dict] = []
+    trace = _Trace(on_step)
     dataset = connector.call("get_dataset_info")
     postings = search(connector, roles, trace)
     sample = len(postings)

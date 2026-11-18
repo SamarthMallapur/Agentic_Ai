@@ -10,6 +10,7 @@ import re
 from pydantic import BaseModel, Field
 
 from . import config, db, governance, llm, memory, prompts
+from .insights import delivery
 from .tools import application_tracker, bullets, keyword_gap, resume_score
 from .vocab import extract_skills
 
@@ -117,6 +118,7 @@ def review_resume(resume: str, jd: str, company: str = "", role: str = "", appli
     rewrites, rejected = _rewrites(resume, role, missing) if use_llm else ([], [])
     result = {
         "status": "done", **score, "company": company, "role": role, "application_id": application_id,
+        "inputs": {"resume_text": resume, "jd": jd},
         "assumptions": assumptions, "recommendations": governance.qa_recommendations(shown), "hidden_by_memory": hidden,
         "rewrites": rewrites,
         "qa": {
@@ -252,7 +254,8 @@ def _heuristic_score(question: dict, answer: str) -> dict:
             "strengths": ["Answer has a usable length."] if clarity >= 8 else [], "improvements": improvements}
 
 
-def evaluate_answer(question: dict, answer: str, application_id: int | None = None, use_llm: bool = True) -> dict:
+def evaluate_answer(question: dict, answer: str, application_id: int | None = None, use_llm: bool = True,
+                    spoken_seconds: float | None = None) -> dict:
     if len(answer.split()) < 5:
         raise ValueError("Please write a fuller answer before asking for feedback.")
     prompt = prompts.EVALUATE_ANSWER.format(category=question.get("category", ""), question=question.get("question", ""),
@@ -262,6 +265,7 @@ def evaluate_answer(question: dict, answer: str, application_id: int | None = No
         feedback, method, confidence = scored.model_dump(), "Gemini", "Medium"
     else:
         feedback, method, confidence = _heuristic_score(question, answer), "Rule-based estimate", "Low"
+    feedback["delivery"] = delivery(answer, spoken_seconds)
     parts = [feedback[k] for k in ("relevance", "structure", "specificity", "clarity")]
     score = round(sum(parts) / len(parts), 1)
     db.execute(

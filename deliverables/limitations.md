@@ -12,6 +12,12 @@
 - The role-match check uses a small synthetic set, so it is a sanity check and not an accuracy estimate.
 - PDF text extraction can scramble multi-column resumes. Scanned PDFs are not supported.
 
+## Decision tools
+- The What-If Simulator estimates rubric changes. It does not edit the resume or predict an employer's decision.
+- Roadmap priority weights and learning-time estimates are transparent design choices, not measured outcomes.
+- Job matches compare listed skills only. With demo data, they are not real openings.
+- Voice input depends on the browser's speech service and may send audio online. Transcription errors can affect feedback.
+
 ## AI output
 - Gemini writes bullet rewrites, tailored questions, answer feedback and the report summary. Results can vary between runs.
 - QA catches added skills, added numbers and unsupported company names by rule. It cannot prove that every sentence is correct or useful.

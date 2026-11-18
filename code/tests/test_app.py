@@ -1,9 +1,10 @@
+import json
 import re
 
 import pytest
 from fastapi.testclient import TestClient
 
-from app import agents, config, db, governance, llm, memory, orchestrator, research, tools
+from app import agents, config, db, governance, insights, llm, memory, orchestrator, research, tools
 from app.connector import MCPConnector
 from app.vocab import extract_skills
 
@@ -142,6 +143,45 @@ def test_weekly_report_end_to_end(demo):
 def test_readiness_is_computed_not_fixed():
     assert orchestrator.readiness(50, 50, 5, 5)["score"] == 55
     assert orchestrator.readiness(None, 50, None, 0)["missing"] == ["Resume match", "Interview practice"]
+
+
+def test_what_if_raises_score_and_leaves_resume_unchanged():
+    original = RESUME
+    base = insights.what_if(RESUME, JD, "Backend Developer")
+    assert base["change"] == 0
+    result = insights.what_if(RESUME, JD, "Backend Developer", ["Docker", "AWS"], ["Length between 200 and 1000 words"])
+    assert result["after"] > result["before"] and result["after"] == sum(p["after"] for p in result["parts"])
+    assert RESUME == original
+
+
+def test_roadmap_is_ranked_cited_and_excludes_known_skills(demo):
+    result = insights.skill_roadmap()
+    scores = [i["priority_score"] for i in result["items"]]
+    known = set(memory.get_profile()["skills"])
+    assert scores == sorted(scores, reverse=True) and scores
+    assert all(i["citations"] and i["skill"] not in known for i in result["items"])
+    assert all(i["confidence"] != "High" for i in result["items"])
+
+
+def test_job_matches_skip_tracked_jobs(demo):
+    items = insights.job_matches()["items"]
+    tracked = {(a["company"], a["role"]) for a in tools.application_tracker("list")["applications"]}
+    assert items and all((i["company"], i["title"]) not in tracked for i in items)
+
+
+def test_delivery_counts_fillers_and_pace():
+    result = insights.delivery("Um I basically built it, um, and you know it worked well today.", 6)
+    assert result["filler_count"] == 4 and result["words_per_minute"] == 130
+    assert insights.delivery("I built it and it worked well.")["words_per_minute"] is None
+
+
+def test_report_stream_sends_live_events_then_report(demo):
+    with TestClient(__import__("app.api", fromlist=["app"]).app) as client:
+        events = [json.loads(line) for line in client.post("/api/report/stream").text.splitlines()]
+    assert {"running", "done"} <= {e.get("state") for e in events}
+    assert any(e["type"] == "research" and e["step"] == "search" for e in events)
+    assert events[-1]["type"] == "report" and events[-1]["report"]["qa_passed"]
+    assert insights.readiness_history()[-1]["report_id"] == events[-1]["report"]["id"]
 
 
 def test_kaggle_style_files_replace_demo_data(demo, tmp_path, monkeypatch):

@@ -100,6 +100,10 @@ TRACE = [
     ("Governance: cited claims, no invented facts", "`code/app/governance.py`", "Attack cases below"),
     ("Governance: low-confidence labelling", "`code/app/governance.py`", "Label test and attack case"),
     ("Guided intake, then rubric, then QA", "`code/app/agents.py`", "Intake test"),
+    ("Extra: what-if resume simulator", "`code/app/insights.py`", "Score change and unchanged-input test"),
+    ("Extra: cited skill roadmap and job matches", "`code/app/insights.py`", "Ranking, citation and tracked-job tests"),
+    ("Extra: live agent mission control", "`/api/report/stream`", "Streaming event test"),
+    ("Extra: mock interview delivery analysis", "`code/app/insights.py`", "Filler and pace test"),
 ]
 
 

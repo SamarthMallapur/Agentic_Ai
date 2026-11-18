@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Check, X } from 'lucide-react'
 import { api } from '../api'
-import { Alert, Bar, Card, Confidence, Page, Tag, useLoad } from '../ui'
+import { Alert, Bar, Card, Confidence, CountUp, Page, Ring, Tag, useLoad } from '../ui'
 
 function Recommendation({ rec, context }) {
   const [decision, setDecision] = useState('')
@@ -24,6 +24,35 @@ function Recommendation({ rec, context }) {
   )
 }
 
+function WhatIf({ r }) {
+  const [skills, setSkills] = useState([])
+  const [fixes, setFixes] = useState([])
+  const [sim, setSim] = useState(null)
+  const skillOptions = [...r.gap.missing, ...r.gap.partial].map((i) => i.skill)
+  const fixOptions = [...r.checklist.filter((c) => !c.passed).map((c) => c.item), ...r.red_flags.map((f) => f.flag)]
+  useEffect(() => {
+    let current = true
+    api.post('/what-if', { resume_text: r.inputs.resume_text, jd: r.inputs.jd, role: r.role, add_skills: skills, fixes }).then((value) => { if (current) setSim(value) })
+    return () => { current = false }
+  }, [r, skills, fixes])
+  const toggle = (list, setList, value) => setList(list.includes(value) ? list.filter((x) => x !== value) : [...list, value])
+  const Chip = ({ value, list, setList }) => <button className={`chip ${list.includes(value) ? 'on' : ''}`} aria-pressed={list.includes(value)} onClick={() => toggle(list, setList, value)}>{value}</button>
+  return (
+    <Card>
+      <span className="feature-kicker">What-if simulator</span>
+      <h2>Test improvements before you edit</h2>
+      <div className="whatif">
+        <div>
+          <div className="choice-group"><h3>If I could honestly show these skills</h3><div className="chips">{skillOptions.length ? skillOptions.map((v) => <Chip key={v} value={v} list={skills} setList={setSkills} />) : <span className="muted small">No skill gaps found.</span>}</div></div>
+          <div className="choice-group"><h3>If I fixed these issues</h3><div className="chips">{fixOptions.length ? fixOptions.map((v) => <Chip key={v} value={v} list={fixes} setList={setFixes} />) : <span className="muted small">No format issues found.</span>}</div></div>
+          {sim?.parts.filter((p) => p.after !== p.before).map((p) => <Bar key={p.criterion} label={p.criterion} value={p.after} max={p.max} text={`${p.before} → ${p.after}`} />)}
+        </div>
+        <div className="score-shift" aria-live="polite"><span className="muted small">Estimated score</span><b><CountUp value={sim?.after ?? r.total} /></b><span className="delta">{sim?.change > 0 ? `+${sim.change} points` : 'No change yet'}</span><p className="muted small">{sim?.note}</p></div>
+      </div>
+    </Card>
+  )
+}
+
 const Skills = ({ title, items, kind }) => (
   <div className="skill-group"><h3>{title} ({items.length})</h3><div className="tags">{items.length ? items.map((i) => <Tag key={i.skill} kind={kind}>{i.skill}{kind === 'bad' ? ` · ${i.priority}` : ''}</Tag>) : <span className="muted small">None</span>}</div></div>
 )
@@ -33,11 +62,12 @@ function Result({ r }) {
     <>
       <Card>
         <div className="result-head">
-          <div className="hero-number">{r.total}<small>/100</small></div>
+          <Ring value={r.total} size={118} />
           <div><strong>{r.role || 'Role not given'}{r.company ? ` at ${r.company}` : ''}</strong><div><Confidence level={r.confidence} /></div><p className="muted small">{r.confidence_reason}</p></div>
         </div>
         {r.breakdown.map((b) => <div key={b.criterion}><Bar label={b.criterion} value={b.score} max={b.max} text={`${b.score}/${b.max}`} /><p className="muted small why">{b.why}</p></div>)}
       </Card>
+      {r.inputs && <WhatIf r={r} />}
       <Card title="Keyword match"><Skills title="Matched" items={r.gap.matched} kind="good" /><Skills title="Related skill found" items={r.gap.partial} kind="warn" /><Skills title="Missing" items={r.gap.missing} kind="bad" /></Card>
       <Card title="Recommendations" note="Accept or reject each one. The app remembers your decision.">
         <ul className="plain">{r.recommendations.map((rec) => <Recommendation key={rec.id} rec={rec} context={`review ${r.review_id}`} />)}</ul>

@@ -49,15 +49,16 @@ The app starts with a sample student, so every page has data straight away.
 |---|---|---|
 | 1 | My Profile | Replace the sample with your resume, skills and target roles, then save |
 | 2 | Applications | Add a company, role and job description |
-| 3 | Resume Review | Pick the application, press **Review my resume**, then accept or reject advice |
-| 4 | Interview Coach | Pick the application, create questions, write answers, get feedback |
-| 5 | Weekly Report | Press **Generate new report** and open the sources behind each claim |
+| 3 | Resume Review | Pick the application, press **Review my resume**, accept or reject advice, then try the What-If Simulator |
+| 4 | Interview Coach | Create questions, start the timer, type or speak, then get content and delivery feedback |
+| 5 | Career Compass | See which skills to learn next and track best-fit jobs |
+| 6 | Weekly Report | Press **Generate new report**, watch Mission Control, and open each claim's sources |
 
 ## Useful commands
 
 | Task | Command |
 |---|---|
-| Start again with clean demo data (deletes saved data) | `python run.py --reset` |
+| Start again with clean demo data (stop the app first; this deletes saved data) | `python run.py --reset` |
 | Start without opening a browser | `python run.py --no-browser` |
 | Run the tests | `python -m pytest tests -q` |
 | Start the MCP connector alone | `python connector/mcp_server.py` |
@@ -92,6 +93,7 @@ npm run build
 | `run.py` | Starts everything |
 | `app/tools.py` | `resume_score`, `keyword_gap`, `application_tracker` |
 | `app/agents.py` | Intake, Resume-Reviewer and Interview-Coach |
+| `app/insights.py` | What-if simulator, roadmap, job matches and delivery analysis |
 | `app/research.py` | Search, extract, compare, synthesize loop |
 | `app/orchestrator.py` | Agent swarm and weekly report |
 | `app/governance.py` | QA rules |

@@ -1,13 +1,13 @@
 # Weekly Placement Readiness Report
 
 **Student:** Demo Student  
-**Generated:** 2026-11-18T11:09:29  
+**Generated:** 2026-11-18T11:46:18  
 **Readiness:** 59/100
 
 > **Data notice:** Demo data is synthetic, so it cannot support a High confidence claim or describe the real market.
 
 ## Summary
-Your current job search includes three active applications, with one interview in progress. Your resume and readiness scores indicate room for improvement. Market data shows high demand for skills like SQL, Git, and Python. To strengthen your profile, you should focus on aligning your resume with these key technical requirements. Your most important next step is to follow up on your pending job applications to maintain momentum.
+Your current readiness score is 59, with three active job applications in various stages. To improve your prospects, focus on aligning your resume with the skills most frequently requested in job postings, such as SQL, Git, and Python. You also have pending follow-ups for your backend and software engineering applications. The single most important next step is to follow up on your pending job applications to maintain momentum in your search.
 
 ## Recommended actions
 1. **Follow up on Backend Developer at Demo Company 03.** Follow-up was due on 2026-11-17. _Basis: Tracker application #1. Confidence: High._

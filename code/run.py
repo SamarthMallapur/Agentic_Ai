@@ -47,6 +47,8 @@ def main() -> None:
     if not (config.WEB_DIR / "index.html").exists():
         raise SystemExit("The web app build is missing. Run: cd frontend && npm install && npm run build")
 
+    if args.reset and free_port(args.port) != args.port:
+        raise SystemExit(f"Port {args.port} is in use. Stop the running app first, because --reset deletes its saved data.")
     datasets.setup(reset=args.reset)
     port = free_port(args.port)
     url = f"http://127.0.0.1:{port}"

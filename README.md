@@ -4,6 +4,14 @@ An agentic assistant that stays with one student through a placement season. It 
 
 **GitHub repository:** https://github.com/SamarthMallapur/Agentic_Ai
 
+## Standout features
+
+- **Agent Mission Control:** watch the real agents and research steps run live while the weekly report is built.
+- **What-If Simulator:** choose honest resume improvements and see the estimated rubric score change instantly.
+- **Career Compass:** get a cited, ranked skill roadmap and best-fit jobs you can track in one click.
+- **Timed Voice Interview:** answer against a timer by typing or speaking, then review pace, filler words and content.
+- **Readiness Trend:** follow your calculated readiness across weekly reports.
+
 ## Run it
 
 Python 3.10 or newer is the only requirement.

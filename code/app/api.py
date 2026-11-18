@@ -1,11 +1,14 @@
 """FastAPI backend. It also serves the built web app from one address."""
+import json
+import queue
+import threading
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.responses import FileResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 
-from . import agents, config, datasets, db, governance, llm, memory, orchestrator, research
+from . import agents, config, datasets, db, governance, insights, llm, memory, orchestrator, research
 from .tools import STATUSES, application_tracker, read_resume_file
 
 
@@ -62,6 +65,15 @@ class AnswerRequest(BaseModel):
     question: dict
     answer: str
     application_id: int | None = None
+    spoken_seconds: float | None = None
+
+
+class WhatIfRequest(BaseModel):
+    resume_text: str
+    jd: str
+    role: str = ""
+    add_skills: list[str] = []
+    fixes: list[str] = []
 
 
 @app.get("/api/status")
@@ -147,7 +159,48 @@ def interview_questions(req: QuestionsRequest):
 
 @app.post("/api/interview/answer")
 def interview_answer(req: AnswerRequest):
-    return guarded(agents.evaluate_answer, req.question, req.answer, req.application_id)
+    return guarded(agents.evaluate_answer, req.question, req.answer, req.application_id, spoken_seconds=req.spoken_seconds)
+
+
+@app.post("/api/what-if")
+def what_if(req: WhatIfRequest):
+    return insights.what_if(req.resume_text, req.jd, req.role, req.add_skills, req.fixes)
+
+
+@app.get("/api/roadmap")
+def roadmap():
+    return insights.skill_roadmap()
+
+
+@app.get("/api/job-matches")
+def job_matches():
+    return insights.job_matches()
+
+
+@app.get("/api/readiness/history")
+def readiness_history():
+    return insights.readiness_history()
+
+
+@app.post("/api/report/stream")
+def report_stream():
+    """Send live agent progress as one JSON object per line."""
+    events = queue.Queue()
+
+    def work():
+        try:
+            events.put({"type": "report", "report": orchestrator.weekly_report(events.put)})
+        except Exception:
+            events.put({"type": "error", "detail": "The report could not be generated. Please try again."})
+        finally:
+            events.put(None)
+
+    def lines():
+        threading.Thread(target=work, daemon=True).start()
+        while (event := events.get()) is not None:
+            yield json.dumps(event) + "\n"
+
+    return StreamingResponse(lines(), media_type="application/x-ndjson")
 
 
 @app.get("/api/market")

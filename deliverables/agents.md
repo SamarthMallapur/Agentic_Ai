@@ -20,3 +20,5 @@ Rules make every decision that must be repeatable, such as scores, citations and
 **Weekly report:** Resume-Reviewer, Interview-Coach and Market-Analyst run in parallel. Report Editor merges their results, and QA checks the report before it is saved and shown.
 
 If Gemini text fails a QA check, it is discarded and the rule-based version is used.
+
+Mission Control on the Weekly Report page shows these steps from live server events. The What-If Simulator, Career Compass and delivery analysis are rule-based decision tools in `app/insights.py`, so they are not counted as separate AI agents.

@@ -72,7 +72,7 @@ Verified facts:
 
 ### Call 1: rewrite_bullets
 
-- Time: 2026-11-18T11:09:11
+- Time: 2026-11-18T11:46:00
 - Model: gemini-3.1-flash-lite
 - Status: ok
 
@@ -117,7 +117,7 @@ Response:
     },
     {
       "original": "Developed a Flask and SQL web application that tracks applications for 120 students.",
-      "rewrite": "Constructed a Flask and SQL web application to manage tracking for 120 student applications."
+      "rewrite": "Constructed a Flask and SQL web application to manage and track applications for 120 students."
     }
   ]
 }
@@ -125,7 +125,7 @@ Response:
 
 ### Call 2: rewrite_bullets
 
-- Time: 2026-11-18T11:09:13
+- Time: 2026-11-18T11:46:07
 - Model: gemini-3.1-flash-lite
 - Status: ok
 
@@ -162,7 +162,7 @@ Response:
     },
     {
       "original": "Reduced a slow PostgreSQL report query from 4 seconds to 600 ms by adding indexes.",
-      "rewrite": "Optimized a PostgreSQL report query by implementing indexes, reducing execution time from 4 seconds to 600 ms."
+      "rewrite": "Optimized a slow PostgreSQL report query by implementing indexes, reducing execution time from 4 seconds to 600 ms."
     },
     {
       "original": "Wrote 35 unit tests with pytest and fixed 9 defects before release.",
@@ -170,7 +170,7 @@ Response:
     },
     {
       "original": "Developed a Flask and SQL web application that tracks applications for 120 students.",
-      "rewrite": "Constructed a Flask and SQL web application to track applications for 120 students."
+      "rewrite": "Created a Flask and SQL web application to track applications for 120 students."
     }
   ]
 }
@@ -178,7 +178,7 @@ Response:
 
 ### Call 3: interview_questions
 
-- Time: 2026-11-18T11:09:22
+- Time: 2026-11-18T11:46:11
 - Model: gemini-3.1-flash-lite
 - Status: ok
 
@@ -225,44 +225,44 @@ Response:
   "questions": [
     {
       "category": "Technical",
-      "question": "You optimized a PostgreSQL query from 4 seconds to 600ms. What specific steps did you take to identify the bottleneck and implement the fix?",
+      "question": "You optimized a PostgreSQL query from 4 seconds to 600ms. Can you explain the process you used to identify the bottleneck and why adding an index was the correct solution?",
       "answer_points": [
-        "Mention using EXPLAIN ANALYZE to identify the slow sequential scan.",
-        "Explain the decision-making process for choosing which columns to index.",
-        "Discuss verifying the performance improvement and monitoring for potential write-performance trade-offs."
+        "Explain using EXPLAIN ANALYZE to identify sequential scans.",
+        "Discuss the trade-offs of adding indexes versus query refactoring.",
+        "Mention how index types like B-tree improve lookup performance."
       ]
     },
     {
       "category": "Project",
-      "question": "Regarding your Library Search Engine project, how did you implement the inverted index, and what data structures did you prioritize for performance?",
+      "question": "In your Library Search Engine project, you implemented an inverted index. How would you scale this approach if the dataset grew significantly, considering your lack of experience with Redis or distributed systems?",
       "answer_points": [
-        "Describe the mapping of terms to document IDs using a hash map or dictionary.",
-        "Explain how the choice of data structure enabled O(1) or O(log n) lookups compared to linear scanning.",
-        "Discuss the trade-off between memory usage and search speed for your 50,000 records."
+        "Acknowledge the memory limitations of an in-memory inverted index.",
+        "Discuss partitioning data across multiple database instances.",
+        "Explain the importance of caching frequently searched terms."
       ]
     },
     {
       "category": "Behavioral",
-      "question": "Can you describe a situation during your internship where you ha
+      "question": "Tell me about a time you encountered a technical challenge while working on your Placement Tracker 
 ```
 
 ### Call 4: evaluate_answer
 
-- Time: 2026-11-18T11:09:24
+- Time: 2026-11-18T11:46:14
 - Model: gemini-3.1-flash-lite
 - Status: ok
 
 Prompt (end of text):
 
 ```text
-trictly.
+You are the Interview-Coach agent. Score this mock interview answer strictly.
 Give integer scores from 0 to 10 for relevance, structure, specificity and clarity.
 Give up to 2 strengths and up to 3 improvements. Refer only to what the student wrote.
 If the category is Behavioral, judge it against Situation, Task, Action, Result.
 
 Category: Behavioral
-Question: Can you describe a situation during your internship where you had to manage a technical challenge while working under a deadline?
-Points a strong answer covers: Briefly outline the specific task or bug you faced within the ticketing tool project.; Explain the systematic approach you took to isolate the issue while keeping the team informed.; Highlight the outcome, such as meeting the delivery timeline and ensuring code quality via testing.
+Question: Tell me about a time you encountered a technical challenge while working on your Placement Tracker project. How did you resolve it?
+Points a strong answer covers: Describe a specific bug or architectural hurdle encountered.; Detail the debugging steps or research process used to find a solution.; Explain what you learned about backend reliability during the process.
 Student answer:
 We disagreed on an index versus a query rewrite. I tested both on real data, shared the 4 second and 600 ms results, and the team chose the index.
 
@@ -273,7 +273,7 @@ Response:
 ```text
 {
   "relevance": 7,
-  "structure": 3,
+  "structure": 4,
   "specificity": 6,
   "clarity": 7,
   "strengths": [
@@ -281,16 +281,16 @@ Response:
     "Provided a clear, concise outcome."
   ],
   "improvements": [
-    "Apply the STAR method to provide necessary context regarding the project and the deadline.",
-    "Explain the systematic approach taken to isolate the issue beyond just testing two options.",
-    "Elaborate on the final result, specifically confirming if the deadline was met and the quality of the solution."
+    "The answer lacks the Situation and Task components of the STAR method.",
+    "Failed to explain the technical nature of the architectural hurdle or the specific backend reliability lessons learned.",
+    "The response is too brief and does not fully address the prompt's requirements regarding the research process."
   ]
 }
 ```
 
 ### Call 5: weekly_summary
 
-- Time: 2026-11-18T11:09:31
+- Time: 2026-11-18T11:46:20
 - Model: gemini-3.1-flash-lite
 - Status: ok
 
@@ -304,5 +304,5 @@ nd Developer", "due": "2026-11-17"}, {"id": 2, "company": "Demo Company 11", "ro
 Response:
 
 ```text
-Your current job search includes three active applications, with one interview in progress. Your resume and readiness scores indicate room for improvement. Market data shows high demand for skills like SQL, Git, and Python. To strengthen your profile, you should focus on aligning your resume with these key technical requirements. Your most important next step is to follow up on your pending job applications to maintain momentum.
+Your current readiness score is 59, with three active job applications in various stages. To improve your prospects, focus on aligning your resume with the skills most frequently requested in job postings, such as SQL, Git, and Python. You also have pending follow-ups for your backend and software engineering applications. The single most important next step is to follow up on your pending job applications to maintain momentum in your search.
 ```
